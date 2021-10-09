@@ -64,7 +64,11 @@ resource "oci_core_instance" "test_instance" {
   compartment_id      = var.compartment_ocid
   display_name        = "TestInstance${count.index}"
   shape               = var.instance_shape
-
+  
+  metadata = {
+    ssh_authorized_keys = "${file(var.ssh_public_key_file)}"
+    user_date = "#{base64encode(data.template_file.cloud-config.rendered)}"
+  
   shape_config {
     ocpus = var.instance_ocpus
     memory_in_gbs = var.instance_shape_config_memory_in_gbs
