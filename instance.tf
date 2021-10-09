@@ -25,11 +25,11 @@ variable "num_paravirtualized_volumes_per_instance" {
 }
 
 variable "instance_shape" {
-  default = "VM.Standard.E3.Flex"
+  default = var.instance_shape
 }
 
 variable "instance_ocpus" {
-  default = 4
+  default = 1
 }
 
 variable "instance_shape_config_memory_in_gbs" {
@@ -51,18 +51,18 @@ variable "db_size" {
 }
 
 variable "tag_namespace_description" {
-  default = "Matt Hopper Instance OCI"
+  default = "Rsyslog Receiver Instance OCI"
 }
 
 variable "tag_namespace_name" {
-  default = "Matt-tag-namespace"
+  default = "rsyslog-namespace"
 }
 
-resource "oci_core_instance" "test_instance" {
+resource "oci_core_instance" "rsyslog_instance" {
   count               = var.num_instances
   availability_domain = data.oci_identity_availability_domain.ad.name
   compartment_id      = var.compartment_ocid
-  display_name        = "TestInstance${count.index}"
+  display_name        = "RsyslogInstance${count.index}"
   shape               = var.instance_shape
   
   metadata = {
@@ -79,12 +79,12 @@ resource "oci_core_instance" "test_instance" {
     display_name              = "Primaryvnic"
     assign_public_ip          = true
     assign_private_dns_record = true
-    hostname_label            = "exampleinstance${count.index}"
+    hostname_label            = "rsyslog${count.index}"
   }
 
   source_details {
     source_type = "image"
-    source_id = var.flex_instance_image_ocid[var.region]
+    source_id = var.instance_image_ocid[var.region]
     # Apply this to set the size of the boot volume that is created for this instance.
     # Otherwise, the default boot volume size of the image is used.
     # This should only be specified when source_type is set to "image".
