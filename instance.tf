@@ -98,7 +98,7 @@ resource "oci_core_instance" "rsyslog_instance" {
 
   metadata = {
     ssh_authorized_keys = var.ssh_public_key
-    user_data           = base64encode(file("./userdata/bootstrap"))
+    user_data           = base64encode(file("./bootstrap.sh"))
   }
   defined_tags = {
     "${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag2.name}" = "awesome-app-server"
