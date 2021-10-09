@@ -1,8 +1,6 @@
 Rsyslog master log receiver deployment.
 
-Builds a rsyslog vm from Oracle 8 and configures as a receiver
-using the custom local5 facility.
-
+Builds a rsyslog vm from Oracle 8 and configures as a receiver.
 
 
 
