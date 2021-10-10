@@ -2,7 +2,10 @@ data "template_file" "cloud-config" {
   template = <<YAML
 #cloud-config
 runcmd:
-  
+	
+ - hostnamectl set-hostname rsyslog	
+	
+	
  - yum install rsyslog 
 
 
@@ -19,8 +22,7 @@ runcmd:
  - mkdir /var/log/deployment
  - touch /var/log/OCI/deployment.log
  - echo $HOSTNAME >> /var/log/OCI/deployment.log 
- - echo "
-# rsyslog configuration file
+ - echo "# rsyslog configuration file
 
 # For more information see /usr/share/doc/rsyslog-*/rsyslog_conf.html
 # or latest version online at http://www.rsyslog.com/doc/rsyslog_conf.html 
